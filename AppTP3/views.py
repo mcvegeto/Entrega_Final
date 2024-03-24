@@ -2,6 +2,9 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from AppTP3.models import Build, Personajes, Armaduras, Pet
 from AppTP3.forms  import *
+from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 
@@ -10,7 +13,7 @@ from AppTP3.forms  import *
 # CRUD INICIO.
 
 def inicio (request):
-    return render(request, "inicio.html")
+    return render(request, "inicio.html", {"mensaje": "Bienvenido a la Pagina de Diablo 4"})
 
 
 
@@ -25,7 +28,7 @@ def crear_armaduras(request):
     return render(request, "armaduras/crear_armaduras.html")
 
 
-
+@login_required
 def ver_armaduras(request):
 
     todas_armaduras =Armaduras.objects.all()
@@ -33,7 +36,7 @@ def ver_armaduras(request):
     return render(request, "armaduras/ver_armaduras.html", {"total":todas_armaduras})
 
 
-
+@login_required
 def actualizar_armaduras (request, armaduras):
 
     armadura_elegido = Armaduras.objects.get(id=armaduras)
@@ -60,7 +63,7 @@ def actualizar_armaduras (request, armaduras):
 
     return render(request, "armaduras/actualizar_armaduras.html", {"formu":formulario})
 
-
+@login_required
 def borrar_armaduras(request, armaduras):
 
     armadura_elegido = Armaduras.objects.get(id=armaduras)
@@ -83,14 +86,14 @@ def crear_personaje(request):
         return render(request,  "inicio.html")
     return render(request, "personaje/crear_personaje.html")
 
-
+@login_required
 def ver_personaje(request):
 
     todas_personaje =Personajes.objects.all()
 
     return render(request, "personaje/ver_personaje.html", {"total":todas_personaje})
 
-
+@login_required
 def actualizar_personaje (request, personaje):
 
     personaje_elegido = Personajes.objects.get(id=personaje)
@@ -117,7 +120,7 @@ def actualizar_personaje (request, personaje):
 
     return render(request, "personaje/actualizar_personaje.html", {"formu":formulario})
 
-
+@login_required
 def borrar_personaje(request, personaje):
 
     personaje_elegido = Personajes.objects.get(id=personaje)
@@ -153,7 +156,7 @@ def crear_build(request):
         return render(request,  "inicio.html")
     return render(request,  "builds/crear_build.html")
 
-
+@login_required
 def ver_build(request):
 
     todas_build =Build.objects.all()
@@ -161,7 +164,7 @@ def ver_build(request):
     return render(request, "builds/ver_build.html", {"total":todas_build})
 
 
-
+@login_required
 def actualizar_build (request, build):
 
     build_elegido = Build.objects.get(id=build)
@@ -188,7 +191,7 @@ def actualizar_build (request, build):
 
     return render(request, "builds/actualizar_build.html", {"formu":formulario})
 
-
+@login_required
 def borrar_build(request, build):
 
     build_elegido = Build.objects.get(id=build)
@@ -209,7 +212,7 @@ def crear_pet(request):
     return render(request, "pets/crear_pet.html")
 
 
-
+@login_required
 def ver_pet(request):
 
     todas_pet =Pet.objects.all()
@@ -217,7 +220,7 @@ def ver_pet(request):
     return render(request, "pets/ver_pet.html", {"total":todas_pet})
 
 
-
+@login_required
 def actualizar_pet (request, pet):
 
     pet_elegido = Pet.objects.get(id=pet)
@@ -244,7 +247,7 @@ def actualizar_pet (request, pet):
 
     return render(request, "pets/actualizar_pet.html", {"formu":formulario})
 
-
+@login_required
 def borrar_pet(request, pet):
 
     pet_elegido = Pet.objects.get(id=pet)
@@ -252,3 +255,65 @@ def borrar_pet(request, pet):
     pet_elegido.delete()
 
     return render(request, "inicio.html")
+
+
+
+
+#Iniciar Sesion
+
+def iniciar_sesion(request):
+
+        if request.method == "POST":
+
+            formulario = AuthenticationForm(request, data = request.POST)
+
+            if formulario.is_valid():
+            
+                info_dic = formulario.cleaned_data
+            
+                usuario = authenticate(username = info_dic["username"], password = info_dic["password"])
+
+                if usuario is not None:
+
+                    login(request, usuario)
+
+
+                    return render(request,  "inicio.html", {"mensaje" : f"Bienvenido {usuario}"})
+            else:
+
+                return render(request, "inicio.html", {"mensaje" : "ERROR EN LOS DATOS IINGRESADOS"})
+
+        else:
+            
+            formulario = AuthenticationForm()
+
+        return render(request, "registro/inicio_sesion.html", {"formu":formulario})
+
+
+#Registrarse
+
+def registrarse(request):
+    
+    if request.method == "POST":
+
+        formulario = UserCreationForm(request.POST)
+
+        if formulario.is_valid():
+
+             formulario.save()
+              
+             return render (request, "inicio.html", {"mensaje" : "El usuario ha sido Creado con Exito."})
+    else:
+
+        formulario = UserCreationForm()
+
+    return render(request, "registro/registro.html" , {"formu": formulario})
+
+
+#cerrar sesion
+
+def cerrar_sesion(request):
+
+    logout(request)
+
+    return render(request, "inicio.html", {"mensaje" : "El usuario ha cerrado la sesion con Exito."})

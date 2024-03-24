@@ -25,4 +25,7 @@ urlpatterns = [
     path("borrar_pet/<pet>", borrar_pet, name= "borrar_pet"),
 
     path("", inicio, name="Home"),
+    path("login/", iniciar_sesion, name="Iniciar Sesion"),
+    path("signup/", registrarse, name="Registrarse"),
+    path("logout/", cerrar_sesion, name="Cerrar Sesion"),
 ]

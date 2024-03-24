@@ -26,7 +26,13 @@
                 <a class="navbar-brand" href="{% url 'Armaduras' %}">Armaduras</a>
                 <a class="navbar-brand" href="{% url 'Pet' %}">Pet</a>
                 <a class="navbar-brand" href="{% url 'Buscar' %}">Buscar Personaje</a>
-                <a class="btn btn-primary" href="#signup">Registro</a>
+                {%  if user.is_authenticated  %}
+                <a class="btn btn-primary" href="{% url 'Cerrar Sesion' %}">Cerrar Sesion</a>
+                {% else %}
+                <a class="btn btn-primary" href="{% url 'Registrarse' %}">Registrarse</a>
+                <a class="btn btn-primary" href="{% url 'Iniciar Sesion' %}">Iniciar Sesion</a>
+                {% endif %}
+                
             </div>
         </nav>
         <!-- Masthead-->
