@@ -1,0 +1,26 @@
+{% extends "padre.html" %}
+
+{% block titulo %}
+
+actualizacion de Armaduras
+
+{% endblock %}   
+
+{% block parrafo %}
+
+<p>actualizar Armadura</p>
+        
+
+<form action="" method="POST">  {% csrf_token %}
+
+
+{{formu}}
+
+
+
+<input type="submit" value="Guardar">
+
+
+</form>
+
+{% endblock %}

@@ -1,0 +1,23 @@
+{% extends "padre.html" %}
+{% block titulo %}
+Creacion de Personajes
+{% endblock %}   
+
+{% block parrafo %}
+
+<p>Crear Personaje</p>
+        
+
+<form action="/AppTP3/crear_personaje/" method="POST">  {% csrf_token %}
+
+
+    <p>Nombre: <input type="text" name="nombre"> </p>
+    <p>Raza: <input type="text" name="raza"> </p>
+    <p>Averno: <input type="text" name="averno"> </p>
+
+    <input type="submit">
+
+
+</form>
+
+{% endblock %}

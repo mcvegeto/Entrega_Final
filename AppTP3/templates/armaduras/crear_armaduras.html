@@ -1,0 +1,23 @@
+{% extends "padre.html" %}
+{% block titulo %}
+Armaduras del Personaje
+{% endblock %}   
+
+{% block parrafo %}
+
+<p>Ingresar Armaduras</p>
+        
+
+<form action="/AppTP3/crear_armaduras/" method="POST">  {% csrf_token %}
+
+
+    <p>Nombre de Armadura: <input type="text" name="nombre_armadura"> </p>
+    <p>Tipo de Armadura: <input type="text" name="tipo_armadura"> </p>
+    <p>Lv de Armadura: <input type="number" name="lv_armadura"> </p>
+
+    <input type="submit">
+
+
+</form>
+
+{% endblock %}

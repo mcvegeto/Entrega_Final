@@ -1,0 +1,27 @@
+{% extends "padre.html" %}
+
+{% block titulo %}
+Builds creadas
+{% endblock %}   
+
+{% block parrafo %}
+
+<p>Builds en la base de datos</p>
+
+<ol>
+
+    {% for valor in total %}
+<p></p>
+        <li>Nombre: {{valor.nombre}} --- Tipo: {{valor.tipo_daño}} --- Lv: {{valor.Total_daño}}</li>
+<p></p>
+        <a class="btn btn-primary"  href="{% url 'actualizar_build' valor.id %}">actualizar_build</a>
+        <a class="btn btn-primary"  href="{% url 'borrar_build' valor.id %}">borrar_build</a>
+
+    {% endfor %}
+
+
+</ol>
+<p></p>
+<a class="btn btn-primary" href=" {% url 'Build' %}">Nueva Build</a>
+<p></p>
+{% endblock %}

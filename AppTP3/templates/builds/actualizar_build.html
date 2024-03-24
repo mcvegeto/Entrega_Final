@@ -1,0 +1,26 @@
+{% extends "padre.html" %}
+
+{% block titulo %}
+
+actualizacion de Builds
+
+{% endblock %}   
+
+{% block parrafo %}
+
+<p>Actualizar Build</p>
+        
+
+<form action="" method="POST">  {% csrf_token %}
+
+
+{{formu}}
+
+
+
+<input type="submit" value="Guardar">
+
+
+</form>
+
+{% endblock %}

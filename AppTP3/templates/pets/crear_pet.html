@@ -1,0 +1,23 @@
+{% extends "padre.html" %}
+{% block titulo %}
+Pets del Personaje
+{% endblock %}   
+
+{% block parrafo %}
+
+<p>creacion de Pets Pet</p>
+        
+
+<form action="/AppTP3/crear_pet/" method="POST">  {% csrf_token %}
+
+
+    <p>Nombre de Pet: <input type="text" name="nombre"> </p>
+    <p>Raza de Pet: <input type="text" name="raza"> </p>
+    <p>Lv de Pet: <input type="number" name="nivel"> </p>
+
+    <input type="submit">
+
+
+</form>
+
+{% endblock %}

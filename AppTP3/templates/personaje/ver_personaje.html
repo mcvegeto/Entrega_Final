@@ -1,0 +1,29 @@
+{% extends "padre.html" %}
+
+{% block titulo %}
+Personajes creados
+{% endblock %}   
+
+{% block parrafo %}
+
+<p>Personajes en la base de datos</p>
+
+<ol>
+
+    {% for valor in total %}
+<p></p>
+        <li>Nombre: {{valor.nombre}} --- Raza: {{valor.raza}} --- Averno: {{valor.averno}}</li>
+<p></p>
+        <a class="btn btn-primary"  href="{% url 'actualizar_personaje' valor.id %}">actualizar_personaje</a>
+        <a class="btn btn-primary"  href="{% url 'borrar_personaje' valor.id %}">borrar_personaje</a>
+
+    {% endfor %}
+
+
+</ol>
+<p></p>
+
+<a class="btn btn-primary" href=" {% url 'Personaje' %}">Nuevo Personaje</a>
+
+<p></p>
+{% endblock %}
