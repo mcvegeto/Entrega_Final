@@ -16,6 +16,30 @@ python manage.py makemigrations para poder crear las tablas de las class en la d
 
 Los URLS son
 
-path("crear_build/", crear_build, name="Build"), path("crear_armaduras/", crear_armaduras,name="Armaduras" ), path("crear_personaje/", crear_personaje, name="Personaje"), path("buscar_personaje/", buscar_personaje,), path("", inicio, name="Home"),
+path("crear_build/", crear_build, name="Build"), 
+path("crear_armaduras/", crear_armaduras,name="Armaduras" ), 
+path("crear_personaje/", crear_personaje, name="Personaje"), 
+path("buscar_personaje/", buscar_personaje), 
+path("crear_pet/", crear_pet, name="Pet"),
+path("", inicio, name="Home"),
 
-inicio= http://127.0.0.1:8000/AppTP3/ crear PERSONAJE= http://127.0.0.1:8000/AppTP3/crear_personaje/ Crear BUILD = http://127.0.0.1:8000/AppTP3/crear_build/ Crear ARMADURAS= http://127.0.0.1:8000/AppTP3/crear_armaduras/ Buscar PERSONAJE= http://127.0.0.1:8000/AppTP3/buscar_personaje/ Ver resultados= http://127.0.0.1:8000/AppTP3/buscar_personaje/
+inicio= http://127.0.0.1:8000/AppTP3/
+crear personaje http://127.0.0.1:8000/AppTP3/crear_personaje/ 
+Crear BUILD = http://127.0.0.1:8000/AppTP3/crear_build/ 
+Crear ARMADURAS= http://127.0.0.1:8000/AppTP3/crear_armaduras/ 
+Buscar PERSONAJE= http://127.0.0.1:8000/AppTP3/buscar_personaje/
+
+Para actualizar y borrar (con login)
+
+path("ver_build/", ver_build, name= "ver_build"),
+path("ver_armaduras/", ver_armaduras, name= "ver_armaduras"),
+path("ver_personaje/", ver_personaje, name= "ver_personaje"),
+path("ver_pet/", ver_pet, name= "ver_pet"),
+
+http://127.0.0.1:8000/AppTP3/ver_build/
+http://127.0.0.1:8000/AppTP3/ver_armaduras/
+http://127.0.0.1:8000/AppTP3/ver_personaje/
+http://127.0.0.1:8000/AppTP3/ver_pet/
+
+
+superuser darks   pass Jupiter14
