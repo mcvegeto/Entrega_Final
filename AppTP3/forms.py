@@ -1,4 +1,6 @@
 from django import forms
+from django.contrib.auth.forms import UserCreationForm, UserChangeForm
+from django.contrib.auth.models import User
 
 class ArmadurasFormulario(forms.Form):
 
@@ -26,3 +28,28 @@ class PetFormulario(forms.Form):
     nombre = forms.CharField(max_length = 60)
     raza = forms.CharField(max_length = 60)
     nivel = forms.IntegerField()
+
+
+class RegistroUsuario(UserCreationForm):
+
+    class Meta:
+
+        model = User
+        fields = ["username", "last_name", "first_name", "email", "password1", "password2"]
+
+
+class EditarUsuario(UserChangeForm):
+
+    password = None
+
+    class Meta:
+
+        model = User
+        fields = ["last_name", "first_name", "email"]
+
+
+
+class AvatarFormulario(forms.Form):
+
+    imagen = forms.ImageField()
+    

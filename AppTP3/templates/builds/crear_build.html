@@ -1,6 +1,16 @@
 {% extends  "padre.html" %}
 
+{% block titulo %}
+
+Creacion de Builds
+
+{% endblock %}  
+
 {% block parrafo %}
+
+<p>Creacion de Builds</p>
+
+<p></p>
 
 
 <form action="/AppTP3/crear_build/" method="POST">  {% csrf_token %}

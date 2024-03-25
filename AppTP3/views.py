@@ -1,10 +1,12 @@
 from django.shortcuts import render
 from django.http import HttpResponse
-from AppTP3.models import Build, Personajes, Armaduras, Pet
+from AppTP3.models import Build, Personajes, Armaduras, Pet, Avatar
 from AppTP3.forms  import *
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.views import PasswordChangeView
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 # Create your views here.
 
@@ -13,7 +15,12 @@ from django.contrib.auth.decorators import login_required
 # CRUD INICIO.
 
 def inicio (request):
+
     return render(request, "inicio.html", {"mensaje": "Bienvenido a la Pagina de Diablo 4"})
+
+def acerca_de_mi(request):
+
+    return render(request, "registro/about.html")
 
 
 
@@ -296,7 +303,7 @@ def registrarse(request):
     
     if request.method == "POST":
 
-        formulario = UserCreationForm(request.POST)
+        formulario = RegistroUsuario(request.POST)
 
         if formulario.is_valid():
 
@@ -305,9 +312,53 @@ def registrarse(request):
              return render (request, "inicio.html", {"mensaje" : "El usuario ha sido Creado con Exito."})
     else:
 
-        formulario = UserCreationForm()
+        formulario = RegistroUsuario()
 
     return render(request, "registro/registro.html" , {"formu": formulario})
+
+
+#editar usuario
+
+
+@login_required
+def editarPerfil(request):
+
+    usuario = request.user
+
+    if request.method == 'POST' :
+
+        miFormulario = EditarUsuario(request.POST)
+
+        if miFormulario.is_valid():
+
+            informacion = miFormulario.cleaned_data
+
+            
+            usuario.email = informacion['email']
+            usuario.last_name = informacion['last_name']
+            usuario.first_name = informacion['first_name']
+
+
+            usuario.save()
+
+            return render (request, "inicio.html")
+    
+    else:
+
+        miFormulario = EditarUsuario(initial={'first_name': usuario.first_name, 'last_name': usuario.last_name, 'email' : usuario.email})
+        
+
+
+    return render(request, "registro/editar_usuario.html", {"formu":miFormulario})
+
+
+
+#cambiar contraseña
+
+class CambiarContra(LoginRequiredMixin, PasswordChangeView):
+
+    template_name = "registro/cambiar_contra.html"
+    success_url = "/AppTP3/"
 
 
 #cerrar sesion
@@ -317,3 +368,29 @@ def cerrar_sesion(request):
     logout(request)
 
     return render(request, "inicio.html", {"mensaje" : "El usuario ha cerrado la sesion con Exito."})
+
+
+
+#Avartar
+
+@login_required
+def agregar_avatar(request):
+    
+    if request.method == "POST":
+
+        formulario = AvatarFormulario(request.POST, request.FILES)
+
+        if formulario.is_valid():
+             
+             info = formulario.cleaned_data
+             usuario_actual = User.objects.get(username=request.user)
+             nuevo_avatar = Avatar(usuario=usuario_actual, imagen=info["imagen"])
+
+             nuevo_avatar.save()
+              
+             return render (request, "inicio.html", {"mensaje" : "Tu Avatar ha sido Creado con Exito."})
+    else:
+
+        formulario = AvatarFormulario()
+
+    return render(request, "registro/nuevo_avatar.html" , {"formu": formulario})

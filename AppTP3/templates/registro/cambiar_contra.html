@@ -1,0 +1,25 @@
+{% extends "padre.html" %}
+
+{% block titulo %}
+
+Sitio para Cambiar Contraseña
+
+{% endblock %}   
+
+{% block parrafo %}
+
+        
+
+<form action="" method="POST">  {% csrf_token %}
+
+
+{{form}}
+
+
+
+<input type="submit" value="Cambiar Contraseña">
+
+
+</form>
+
+{% endblock %}

@@ -1,0 +1,25 @@
+{% extends "padre.html" %}
+
+{% block titulo %}
+
+Sitio para Editar Usuario
+
+{% endblock %}   
+
+{% block parrafo %}
+
+        
+
+<form action="" method="POST">  {% csrf_token %}
+
+
+{{formu}}
+
+
+
+<input type="submit" value="Editar Usuario">
+
+
+</form>
+
+{% endblock %}
